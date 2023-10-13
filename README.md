@@ -1,16 +1,5 @@
 # mini_market_v1
 
-A new Flutter project.
+Este projeto servirá de frontend para uma aplicação de controle para mini mercados, com cadastros de clientes, produtos e relatórios.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+O backend será construído em Golang com banco de dados Postgre
