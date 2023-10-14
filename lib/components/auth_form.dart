@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_market_v1/pages/home_page.dart';
 
 enum AuthMode { signup, login }
 
@@ -14,6 +15,7 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   AuthMode _authMode = AuthMode.login;
+
   final Map<String, String> _authData = {
     'email': '',
     'password': '',
@@ -33,23 +35,24 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   void _submit() {
-    final isValid = _formKey.currentState?.validate() ?? false;
-
-    if (!isValid) {
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    _formKey.currentState?.save();
-
-    if (_isLogin()) {
-      // Login
-    } else {
-      // Registrar
-    }
-
-    setState(() => _isLoading = false);
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+//     final isValid = _formKey.currentState?.validate() ?? false;
+//
+//     if (!isValid) {
+//       return;
+//     }
+//
+//     setState(() => _isLoading = true);
+//
+//     _formKey.currentState?.save();
+//
+//     if (_isLogin()) {
+//       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+//     } else {
+//       // Registrar
+//     }
+//
+//     setState(() => _isLoading = false);
   }
 
   @override
@@ -116,14 +119,15 @@ class _AuthFormState extends State<AuthForm> {
                 ElevatedButton(
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 8,
-                    ),
-                  ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 8,
+                      ),
+                      backgroundColor: const Color.fromRGBO(1, 149, 146, 1),
+                      foregroundColor: Colors.white),
                   child: Text(
                     _authMode == AuthMode.login ? 'ENTRAR' : 'REGISTRAR',
                   ),
@@ -131,9 +135,10 @@ class _AuthFormState extends State<AuthForm> {
               const Spacer(),
               TextButton(
                 onPressed: _switchAuthMode,
-                child: Text(
-                  _isLogin() ? 'CADASTRAR-SE' : 'VOLTAR',
-                ),
+                child: Text(_isLogin() ? 'CADASTRAR-SE' : 'VOLTAR',
+                    style: const TextStyle(
+                      color: Color.fromRGBO(1, 149, 146, 1),
+                    )),
               ),
             ],
           ),
