@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mini_market_v1/models/products_models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,6 +11,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
+  String _selectedButton = 'Produtos';
+
+  final List<ProductModel> products = ProductModel.mockProducts();
+
+  Widget buildButton(String buttonText) {
+    bool isSelected = buttonText == _selectedButton;
+    return Expanded(
+      child: SizedBox(
+        height: double.infinity,
+        child: TextButton(
+          onPressed: () {
+            setState(() {
+              _selectedButton = buttonText;
+            });
+          },
+          style: TextButton.styleFrom(
+            backgroundColor: isSelected ? Colors.black12 : Colors.transparent,
+          ),
+          child: Text(
+            buttonText,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +84,38 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: const Align(alignment: Alignment.topCenter, child: Text('Vendas')),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 40,
+            child: Row(
+              children: [
+                buildButton('Produtos'),
+                buildButton('Clientes'),
+                buildButton('Vendas'),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  dense: true,
+                  title: Text(products[index].name),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Quantidade: ${products[index].quantity} ${products[index].unit}'),
+                      Text('Vencimento: ${DateFormat('dd/MM/yyyy').format(products[index].expirationDate)}'),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
