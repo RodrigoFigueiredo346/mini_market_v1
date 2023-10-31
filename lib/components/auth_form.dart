@@ -13,7 +13,7 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
+  final bool _isLoading = false;
   AuthMode _authMode = AuthMode.login;
 
   final Map<String, String> _authData = {
@@ -75,10 +75,12 @@ class _AuthFormState extends State<AuthForm> {
                 decoration: const InputDecoration(labelText: 'E-mail'),
                 keyboardType: TextInputType.emailAddress,
                 onSaved: (email) => _authData['email'] = email ?? '',
-                validator: (_email) {
-                  final email = _email ?? '';
-                  if (email.trim().isEmpty || !email.contains('@')) {
-                    return 'Informe um e-mail válido.';
+                validator: (email) {
+                  //final email = email ?? '';
+                  if (email != null) {
+                    if (email.trim().isEmpty || !email.contains('@')) {
+                      return 'Informe um e-mail válido.';
+                    }
                   }
                   return null;
                 },
@@ -89,6 +91,7 @@ class _AuthFormState extends State<AuthForm> {
                 obscureText: true,
                 controller: _passwordController,
                 onSaved: (password) => _authData['password'] = password ?? '',
+                // ignore: no_leading_underscores_for_local_identifiers
                 validator: (_password) {
                   final password = _password ?? '';
                   if (password.isEmpty || password.length < 5) {
@@ -104,6 +107,7 @@ class _AuthFormState extends State<AuthForm> {
                   obscureText: true,
                   validator: _isLogin()
                       ? null
+                      // ignore: no_leading_underscores_for_local_identifiers
                       : (_password) {
                           final password = _password ?? '';
                           if (password != _passwordController.text) {
