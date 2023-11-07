@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mini_market_v1/models/products_models.dart';
+import 'package:mini_market_v1/models/sales_models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   String _selectedButton = 'Produtos';
 
-  final List<ProductModel> products = ProductModel.mockProducts();
+  final List<SalesModel> sales = SalesModel.mockProducts();
 
   Widget buildButton(String buttonText) {
     bool isSelected = buttonText == _selectedButton;
@@ -91,30 +91,61 @@ class _HomePageState extends State<HomePage> {
             height: 40,
             child: Row(
               children: [
-                buildButton('Produtos'),
-                buildButton('Clientes'),
-                buildButton('Vendas'),
+                // buildButton('Produtos'),
+                buildButton('CLIENTES'),
+                buildButton('VENDAS'),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.blueGrey,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Últimas vendas',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )
               ],
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: products.length,
+              itemCount: sales.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  dense: true,
-                  title: Text(products[index].name),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Quantidade: ${products[index].quantity} ${products[index].unit}'),
-                      Text('Vencimento: ${DateFormat('dd/MM/yyyy').format(products[index].expirationDate)}'),
-                    ],
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ListTile(
+                    //dense: true,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(sales[index].client),
+                        Text(sales[index].value.toString()),
+                      ],
+                    ),
                   ),
                 );
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Adicionar Cliente'),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Adicionar Venda'),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
