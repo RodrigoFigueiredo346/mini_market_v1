@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:mini_market_v1/components/sales_form.dart';
 import 'package:mini_market_v1/models/sales_models.dart';
 
 class HomePage extends StatefulWidget {
@@ -140,7 +140,9 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('Adicionar Cliente'),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SalesForm()));
+                  },
                   child: const Text('Adicionar Venda'),
                 ),
               ],
