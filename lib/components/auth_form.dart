@@ -17,8 +17,9 @@ class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.login;
 
   final Map<String, String> _authData = {
-    'email': '',
+    'user': '',
     'password': '',
+    'phone': '',
   };
 
   bool _isLogin() => _authMode == AuthMode.login;
@@ -35,7 +36,7 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   void _submit() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
 //     final isValid = _formKey.currentState?.validate() ?? false;
 //
 //     if (!isValid) {
@@ -65,26 +66,41 @@ class _AuthFormState extends State<AuthForm> {
       ),
       child: Container(
         padding: const EdgeInsets.all(16),
-        height: _isLogin() ? 310 : 400,
+        height: _isLogin() ? 310 : 450,
         width: deviceSize.width * 0.75,
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(labelText: 'E-mail'),
-                keyboardType: TextInputType.emailAddress,
-                onSaved: (email) => _authData['email'] = email ?? '',
-                validator: (email) {
+                decoration: const InputDecoration(labelText: 'Usuário'),
+                keyboardType: TextInputType.text,
+                onSaved: (user) => _authData['user'] = user ?? '',
+                validator: (user) {
                   //final email = email ?? '';
-                  if (email != null) {
-                    if (email.trim().isEmpty || !email.contains('@')) {
-                      return 'Informe um e-mail válido.';
+                  if (user != null) {
+                    if (user.trim().isEmpty) {
+                      return 'Informe um usuário válido.';
                     }
                   }
                   return null;
                 },
               ),
+              if (_isLogin())
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'Usuário'),
+                  keyboardType: TextInputType.emailAddress,
+                  onSaved: (user) => _authData['user'] = user ?? '',
+                  validator: (user) {
+                    //final email = email ?? '';
+                    if (user != null) {
+                      if (user.trim().isEmpty || !user.contains('@')) {
+                        return 'Informe um usuário válido.';
+                      }
+                    }
+                    return null;
+                  },
+                ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Senha'),
                 keyboardType: TextInputType.emailAddress,

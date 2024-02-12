@@ -18,7 +18,7 @@ class _SalesFormState extends State<SalesForm> {
   List clients = [];
 
   void _submit() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   Future<void> _initClients() async {
@@ -29,7 +29,7 @@ class _SalesFormState extends State<SalesForm> {
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     _initClients();
   }
@@ -59,9 +59,8 @@ class _SalesFormState extends State<SalesForm> {
                       keyboardType: TextInputType.emailAddress,
                       obscureText: true,
                       controller: _searchController,
-                      // ignore: no_leading_underscores_for_local_identifiers
-                      validator: (_password) {
-                        final password = _password ?? '';
+                      validator: (psw) {
+                        final password = psw ?? '';
                         if (password.isEmpty || password.length < 5) {
                           return 'Informe uma senha válida';
                         }
@@ -83,7 +82,7 @@ class _SalesFormState extends State<SalesForm> {
                     dropdownMenuEntries: clients.map<DropdownMenuEntry<ClientModel>>((client) {
                       return DropdownMenuEntry<ClientModel>(
                         value: client,
-                        label: client.name, // Substitua 'name' pelo campo correto do cliente que você deseja exibir.
+                        label: client.name,
                       );
                     }).toList(),
                     onSelected: (ClientModel? selectedClient) {

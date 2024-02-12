@@ -36,6 +36,7 @@ class SalesModel {
       SalesModel(value: 100, client: 'João Pedro da Silva', saledate: _parseDate('30/10/2023')),
       SalesModel(value: 80.40, client: 'Mario Pedro da Silva', saledate: _parseDate('20/09/2023')),
       SalesModel(value: 52.56, client: 'Maria Joana Dutra', saledate: _parseDate('05/08/2023')),
+      SalesModel(value: 52.56, client: 'Maria Joana Dutra', saledate: _parseDate('05/08/2023')),
     ];
   }
 

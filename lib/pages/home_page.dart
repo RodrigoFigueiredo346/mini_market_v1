@@ -1,153 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:mini_market_v1/components/sales_form.dart';
-import 'package:mini_market_v1/models/sales_models.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _HomePageState createState() => _HomePageState();
+void main() {
+  runApp(MyApp());
 }
 
-class _HomePageState extends State<HomePage> {
-  final TextEditingController _searchController = TextEditingController();
-  String _selectedButton = 'Produtos';
-
-  final List<SalesModel> sales = SalesModel.mockProducts();
-
-  Widget buildButton(String buttonText) {
-    bool isSelected = buttonText == _selectedButton;
-    return Expanded(
-      child: SizedBox(
-        height: double.infinity,
-        child: TextButton(
-          onPressed: () {
-            setState(() {
-              _selectedButton = buttonText;
-            });
-          },
-          style: TextButton.styleFrom(
-            backgroundColor: isSelected ? Colors.black12 : Colors.transparent,
-          ),
-          child: Text(
-            buttonText,
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-        ),
-      ),
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(),
     );
   }
+}
 
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
-        title: Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: AppBar().preferredSize.height * 0.7,
-                child: TextFormField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search, color: Colors.white),
-                    ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(18)),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(18)),
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  style: const TextStyle(color: Colors.white),
-                  onChanged: (text) {
-                    // Handle search text changes
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.logout),
-            )
-          ],
-        ),
+        automaticallyImplyLeading: false,
+        title: Text('Vendas'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              // Implementar a lógica de pesquisa
+            },
+          ),
+          SizedBox(width: 30),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              // Implementar a lógica de pesquisa
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 40,
+          SizedBox(height: 20),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                // buildButton('Produtos'),
-                buildButton('CLIENTES'),
-                buildButton('VENDAS'),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.blueGrey,
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Últimas vendas',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: sales.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ListTile(
-                    //dense: true,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(sales[index].client),
-                        Text(sales[index].value.toString()),
-                      ],
+              children: List.generate(26, (index) {
+                final letter = String.fromCharCode('A'.codeUnitAt(0) + index);
+                return GestureDetector(
+                  onTap: () {
+                    // Implementar a lógica para exibir clientes que começam com a letra selecionada
+                    debugPrint('Letra selecionada: $letter');
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    child: Text(letter),
                   ),
                 );
-              },
+              }),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Adicionar Cliente'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SalesForm()));
-                  },
-                  child: const Text('Adicionar Venda'),
-                ),
-              ],
-            ),
-          )
+          // Adicione aqui a lista de clientes ou a mensagem de nenhum cliente encontrado
         ],
       ),
     );
