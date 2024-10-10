@@ -1,6 +1,6 @@
 # Mini Market
 
-Este projeto servirá de frontend para uma aplicação de controle para mini mercados, com cadastros de clientes, produtos, relatórios e controle diário de vendas.
+Este projeto servirá de frontend para uma aplicação mobile de controle para mini mercados, com cadastros de clientes, produtos, relatórios e controle diário de vendas.
 
 O backend será construído em Golang com banco de dados Firebase/Postgre.
 
